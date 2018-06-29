@@ -30,7 +30,7 @@ export class ContactService {
 
   /**
    *
-   * save a contact
+   * save a contact-add-edit
    *
    * @param {Contact} contact
    * @returns {Promise<any>}
@@ -43,10 +43,10 @@ export class ContactService {
         .pipe(map(result => {
           return result;
         })).toPromise();
-      console.log('contact save result', result);
+      console.log('contact-add-edit save result', result);
       return result;
     } catch (e) {
-      console.log('error saving contact', e);
+      console.log('error saving contact-add-edit', e);
       return {
         success: false,
         message: 'System Error Saving Record'

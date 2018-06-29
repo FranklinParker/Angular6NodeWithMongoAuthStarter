@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ContactComponent} from './components/contact/contact.component';
+import {ContactAddEditComponent} from './components/contact-add-edit/contact-add-edit.component';
 import {SharedModule} from "../shared/shared.module";
 import { ContactMainComponent } from './components/contact-main/contact-main.component';
 
@@ -10,7 +10,7 @@ import { ContactMainComponent } from './components/contact-main/contact-main.com
     SharedModule
   ],
   declarations: [
-    ContactComponent,
+    ContactAddEditComponent,
     ContactMainComponent
   ],
   exports: [

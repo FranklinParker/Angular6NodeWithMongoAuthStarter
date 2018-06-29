@@ -4,7 +4,7 @@ import {TestComponent} from "./core/components/test/test.component";
 import {LoginComponent} from "./auth/components/login/login.component";
 import {SignupComponent} from "./auth/components/signup/signup.component";
 import {HomeComponent} from "./core/components/home/home.component";
-import {ContactComponent} from "./contact/components/contact/contact.component";
+import {ContactAddEditComponent} from "./contact/components/contact-add-edit/contact-add-edit.component";
 import {AuthGuard} from "./auth/service/auth.guard";
 import {ContactMainComponent} from "./contact/components/contact-main/contact-main.component";
 
