@@ -11,14 +11,21 @@ export class ContactMainComponent implements OnInit {
   contact: Contact ={
     firstName: null,
     lastName: null,
-    email: null,
+    email: 'test',
     phone: null
   };
+  selectedTabIndex = 0;
   contactList: Contact[] = [];
   constructor(private contactService: ContactService) { }
 
   async ngOnInit() {
     await this.contactService.getContacts();
+  }
+
+
+  goToResultTab(){
+    this.selectedTabIndex = 1;
+
   }
 
 }
