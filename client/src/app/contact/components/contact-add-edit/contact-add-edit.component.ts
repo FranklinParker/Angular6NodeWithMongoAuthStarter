@@ -6,10 +6,10 @@ import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  templateUrl: './contact-add-edit.component.html',
+  styleUrls: ['./contact-add-edit.component.css']
 })
-export class ContactComponent implements OnInit {
+export class ContactAddEditComponent implements OnInit {
   contact: Contact ={
     firstName: null,
     lastName: null,
@@ -23,7 +23,7 @@ export class ContactComponent implements OnInit {
   }
 
   /**
-   * save a contact
+   * save a contact-add-edit
    *
    * @param {NgForm} form
    * @returns {Promise<void>}
