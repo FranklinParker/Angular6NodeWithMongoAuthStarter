@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-card-header>
+    <h4>Test Page</h4>
+  </mat-card-header>
+  <mat-card-content >
+    <mat-form-field>
+      <textarea matInput rows="4"
+                [ngModel]="result"
+                disabled="true"
+                placeholder="Result"></textarea>
+    </mat-form-field>
+    <mat-action-row>
+      <button mat-raised-button
+              (click)="testApi()"
+              color="accent" type="button">Test get Api
+      </button>
+      <button mat-raised-button
+              (click)="testPost()"
+              color="accent" type="button">Test Post Api
+      </button>
+    </mat-action-row>
+  </mat-card-content>
+</mat-card>
