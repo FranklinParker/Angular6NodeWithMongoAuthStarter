@@ -8,6 +8,10 @@ a:hover, a:active{
   color: lightgrey;
 }
 
+.welcome-header{
+  font-size: 14pt;
+}
+
 .navigation-list-items{
   list-style: none;
   padding-left: 1rem;

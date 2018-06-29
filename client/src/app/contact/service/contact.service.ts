@@ -10,7 +10,7 @@ import {Contact} from "../model/contact";
 export class ContactService {
   getUrl = environment.apiUrl + 'contact';
   postUrl = environment.apiUrl + 'contact';
-  
+
 
 
   constructor(private http: HttpClient) {
