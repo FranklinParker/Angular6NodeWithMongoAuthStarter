@@ -2,6 +2,7 @@
 a{
   text-decoration: none;
   color: white;
+  font-size: 14pt;
 }
 
 a:hover, a:active{
