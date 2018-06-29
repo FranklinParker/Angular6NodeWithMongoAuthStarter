@@ -6,6 +6,13 @@
     <h3>Contacts</h3>
   </mat-card-header>
   <mat-card-content>
-    <p>List all Contacts</p>
+    <div *ngIf="contactList && contactList.length>0">
+      <div *ngFor="let contact of contactList">
+        <label >{{contact.firstName+ ' ' +contact.lastName}}</label>
+      </div>
+    </div>
+    <div *ngIf="!contactList || contactList.length===0">
+      <label>No Contacts found</label>
+    </div>
   </mat-card-content>
 </mat-card>

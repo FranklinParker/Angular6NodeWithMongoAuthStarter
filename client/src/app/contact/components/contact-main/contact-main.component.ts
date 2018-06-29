@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
 
@@ -8,22 +8,24 @@ import {ContactService} from "../../service/contact.service";
   styleUrls: ['./contact-main.component.css']
 })
 export class ContactMainComponent implements OnInit {
-  contact: Contact ={
+  contact: Contact = {
     firstName: null,
     lastName: null,
     email: 'test',
     phone: null
   };
   selectedTabIndex = 0;
-  contactList: Contact[] = [];
-  constructor(private contactService: ContactService) { }
+
+  constructor(private contactService: ContactService) {
+  }
 
   async ngOnInit() {
     await this.contactService.getContacts();
+
   }
 
 
-  goToResultTab(){
+  goToResultTab() {
     this.selectedTabIndex = 1;
 
   }

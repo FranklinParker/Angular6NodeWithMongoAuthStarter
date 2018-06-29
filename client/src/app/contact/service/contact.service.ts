@@ -3,6 +3,7 @@ import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Contact} from "../model/contact";
+import {Subject} from "rxjs/index";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import {Contact} from "../model/contact";
 export class ContactService {
   getUrl = environment.apiUrl + 'contact';
   postUrl = environment.apiUrl + 'contact';
+  contactList: Contact[] = [];
+  private contactListSubject = new Subject<Contact[]> ();
 
 
 
@@ -36,12 +39,22 @@ export class ContactService {
             };
           });
         })).toPromise();
-      console.log('data ', data);
+      this.contactList = data;
+      this.contactListSubject.next(this.contactList);
     } catch (e) {
       console.log('error getting contacts', e);
     }
 
 
+  }
+
+  /**
+   * listens to changes in the contact list subject
+   *
+   * @returns {Observable<Contact[]>}
+   */
+  getContactListObservable(){
+    return this.contactListSubject.asObservable();
   }
 
   /**
