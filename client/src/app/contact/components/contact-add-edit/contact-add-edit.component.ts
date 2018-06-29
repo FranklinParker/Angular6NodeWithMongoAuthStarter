@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
@@ -10,12 +10,7 @@ import {MatSnackBar} from "@angular/material";
   styleUrls: ['./contact-add-edit.component.css']
 })
 export class ContactAddEditComponent implements OnInit {
-  contact: Contact ={
-    firstName: null,
-    lastName: null,
-    email: null,
-    phone: null
-  };
+  @Input() contact: Contact;
   constructor(private contactService: ContactService,
               private snackBar: MatSnackBar) { }
 

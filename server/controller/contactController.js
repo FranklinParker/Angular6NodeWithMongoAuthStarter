@@ -12,7 +12,7 @@ const saveContact = async (params) => {
 
 	try {
 		const contactSearch = await Contact.findOne({email: contactData.email });
-
+		console.log('contactSearch', contactSearch);
 		if(contactSearch){
 			return {
 				success: false,
@@ -39,7 +39,33 @@ const saveContact = async (params) => {
 
 };
 
+/**
+ * get a list of contacts
+ *
+ * @param params
+ * @returns {Promise<*>}
+ */
+
+const getContacts = async (params)=>{
+	console.log('getContacts - params', params)
+  try {
+    const contactRecords = await Contact.find();
+    console.log('contactRecords', contactRecords);
+
+    return {
+      success: true,
+      records: contactRecords
+    };
+  } catch (e) {
+    return {
+      success: false,
+      message: e.message
+    };
+  }
+}
+
 
 module.exports ={
-	saveContact
+	saveContact,
+	getContacts
 }

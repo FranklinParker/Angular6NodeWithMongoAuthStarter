@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
@@ -10,23 +10,71 @@ import {Contact} from "../model/contact";
 export class ContactService {
   getUrl = environment.apiUrl + 'contact';
   postUrl = environment.apiUrl + 'contact';
+  
 
 
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * get contact records
+   *
+   * @returns {Promise<any>}
+   */
   async getContacts(): Promise<any> {
+    try {
+      const data: Contact[] = await this.http.get<{ success: boolean, records: any }>(this.getUrl)
+        .pipe(map(contactData => {
+          return contactData.records.map(contact => {
+            return {
+              id: contact._id,
+              firstName: contact.firstName,
+              lastName: contact.lastName,
+              email: contact.email,
+              phone: contact.phone
 
-    const data = await this.http.get<{ success: boolean,records: any }>(this.getUrl
-      )
-      .pipe(map(result => {
-        return result.records;
-      })).toPromise();
-    return data;
-
+            };
+          });
+        })).toPromise();
+      console.log('data ', data);
+    } catch (e) {
+      console.log('error getting contacts', e);
+    }
 
 
   }
+
+  /**
+   *
+   *
+   * @param {number} currentPage
+   * @param pageSize
+   */
+  // getPosts(currentPage: number, pageSize) {
+  //   const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
+  //   this.http
+  //     .get<{ message: string; posts: any, maxPosts: number }>(BACKEND_URL + queryParams)
+  //     .pipe(
+  //       map(postData => {
+  //         return {
+  //           posts: postData.posts.map(post => {
+  //             return {
+  //               title: post.title,
+  //               content: post.content,
+  //               id: post._id,
+  //               imagePath: post.imagePath,
+  //               creator: post.creator
+  //             };
+  //           }),
+  //           maxPosts: postData.maxPosts
+  //         };
+  //       })
+  //     ).subscribe(transformedPosts => {
+  //     this.posts = transformedPosts.posts;
+  //     this.postsUpdated.next({posts: [...this.posts], postCount: transformedPosts.maxPosts});
+  //   });
+  // }
+
 
   /**
    *
@@ -35,7 +83,7 @@ export class ContactService {
    * @param {Contact} contact
    * @returns {Promise<any>}
    */
-  async saveContact(contact: Contact): Promise<{success: boolean, message?: string}> {
+  async saveContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
     try {
       const result = await this.http.post<any>(this.postUrl,
         contact

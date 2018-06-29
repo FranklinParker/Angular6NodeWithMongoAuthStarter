@@ -38,8 +38,10 @@ const apiHandler = (businessMethod, message) => {
 module.exports.initRouter = (app) => {
 	app.post('/api/register', apiHandler(userController.registerUser));
 	app.post('/api/login', apiHandler(userController.login));
-	app.post('/api/contact-add-edit',checkAuth, apiHandler(contactController.saveContact));
-	app.get('/api/test/:id', apiHandler(testController.getData));
+	app.post('/api/contact',checkAuth, apiHandler(contactController.saveContact));
+  app.get('/api/contact',checkAuth, apiHandler(contactController.getContacts));
+
+  app.get('/api/test/:id', apiHandler(testController.getData));
 	app.get('/api/test',checkAuth, apiHandler(testController.getData));
 	app.get('/api/testSecure', checkAuth, apiHandler(testController.getDataSecure));
 	app.post('/api/testpost', checkAuth, apiHandler(testController.getDataPost));
