@@ -91,12 +91,12 @@ export class ContactService {
 
   /**
    *
-   * save a contact-add-edit
+   * save a new contact
    *
    * @param {Contact} contact
    * @returns {Promise<any>}
    */
-  async saveContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
+  async saveNewContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
     try {
       const result = await this.http.post<any>(this.postUrl,
         contact
@@ -104,10 +104,38 @@ export class ContactService {
         .pipe(map(result => {
           return result;
         })).toPromise();
-      console.log('contact-add-edit save result', result);
+      console.log('contact new save result', result);
       return result;
     } catch (e) {
       console.log('error saving contact-add-edit', e);
+      return {
+        success: false,
+        message: 'System Error Saving Record'
+      };
+
+    }
+  }
+
+
+  /**
+   *
+   * updates an existing contact
+   *
+   * @param {Contact} contact
+   * @returns {Promise<any>}
+   */
+  async updateExistingContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
+    try {
+      const result = await this.http.put<any>(this.postUrl,
+        contact
+      )
+        .pipe(map(result => {
+          return result;
+        })).toPromise();
+      console.log('contact update save result', result);
+      return result;
+    } catch (e) {
+      console.log('error saving contact', e);
       return {
         success: false,
         message: 'System Error Saving Record'

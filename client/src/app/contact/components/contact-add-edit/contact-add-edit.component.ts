@@ -12,8 +12,24 @@ import {MatSnackBar} from "@angular/material";
 export class ContactAddEditComponent implements OnInit {
   @Input() contact: Contact;
   @Output() setToNewContactEvent = new EventEmitter();
+
   constructor(private contactService: ContactService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {
+  }
+
+  get headerMessage() {
+    return this.contact.id === null ? "Adding New Contact" : "Editing Contact";
+  }
+
+  /***
+   * returns true if editing an existing record
+   *
+   *
+   * @returns {boolean}
+   */
+  get isEditing(): boolean {
+    return !!this.contact.id;
+  }
 
   ngOnInit() {
   }
@@ -24,16 +40,11 @@ export class ContactAddEditComponent implements OnInit {
    * @param {NgForm} form
    * @returns {Promise<void>}
    */
-  async onSubmit(form: NgForm){
-    const result: {success:boolean, message?:string} = await this.contactService.saveContact(this.contact);
-    if(result.success){
-      this.snackBar.open('Contact Saved!','',{
-        duration: 5000
-      });
-    }else{
-      this.snackBar.open(result.message,'Error Saving Contact',{
-        duration: 9000
-      });
+  async onSubmit(form: NgForm) {
+    if (this.contact.id === null) {
+      await this.saveNewContact();
+    }else {
+      await this.updateExistingContact();
     }
   }
 
@@ -42,22 +53,44 @@ export class ContactAddEditComponent implements OnInit {
    *
    *
    */
-  onSetToNewContact(){
+  onSetToNewContact() {
     this.setToNewContactEvent.emit();
   }
 
-  get headerMessage(){
-    return this.contact.id === null ? "Adding New Contact": "Editing Contact";
-  }
-
-  /***
-   * returns true if editing an existing record
+  /**
+   * saves a new contact
    *
-   *
-   * @returns {boolean}
+   * @returns {Promise<void>}
    */
-  get isEditing(): boolean{
-    return !!this.contact.id;
+
+  private async saveNewContact() {
+    const result: { success: boolean, message?: string } = await this.contactService.saveNewContact(this.contact);
+    if (result.success) {
+      this.snackBar.open('New Contact Saved!', '', {
+        duration: 5000
+      });
+    } else {
+      this.snackBar.open(result.message, 'Error Saving Contact', {
+        duration: 9000
+      });
+    }
   }
 
+  /**
+   * Updates an existing contact
+   *
+   * @returns {Promise<void>}
+   */
+  private async updateExistingContact() {
+    const result: { success: boolean, message?: string } = await this.contactService.updateExistingContact(this.contact);
+    if (result.success) {
+      this.snackBar.open('Contact Updated!', '', {
+        duration: 5000
+      });
+    } else {
+      this.snackBar.open(result.message, 'Error Saving Contact', {
+        duration: 9000
+      });
+    }
+  }
 }
