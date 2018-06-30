@@ -1,15 +1,47 @@
 <mat-card>
   <mat-card-header
     fxLayout="column"
-    fxLayoutAlign="center center"
+    fxLayoutAlign="center left"
     fxLayoutGap="10px">
-    <h3>Contacts</h3>
+    <h1 >Contacts</h1>
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="contactList && contactList.length>0">
-      <div *ngFor="let contact of contactList">
-        <label >{{contact.firstName+ ' ' +contact.lastName}}</label>
-      </div>
+      <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef style="text-align:left;padding-left: 20px">First Name</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:left" >
+            <button mat-button (click)="edit(element)" color="primary">
+              {{element.firstName}}</button>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef style="text-align:left;">Last Name</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:left" >
+            {{element.lastName}}
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef style="text-align:left">Email</mat-header-cell>
+          <mat-cell *matCellDef="let element" style="text-align:left">
+            {{element.email}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef style="text-align:center">Phone</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="text-align:left">
+              {{element.phone}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 (click)="rowClicked(row)"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
     </div>
     <div *ngIf="!contactList || contactList.length===0">
       <label>No Contacts found</label>
