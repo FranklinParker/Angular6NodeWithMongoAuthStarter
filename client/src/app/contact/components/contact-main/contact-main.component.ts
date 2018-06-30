@@ -30,4 +30,10 @@ export class ContactMainComponent implements OnInit {
 
   }
 
+  onEditContact(contact: Contact){
+    this.contact = contact;
+    this.selectedTabIndex = 1;
+
+  }
+
 }

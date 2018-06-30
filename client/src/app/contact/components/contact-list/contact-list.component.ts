@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, ViewChild, EventEmitter, Output} from '@angular/core';
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
 import {Subscription} from "rxjs/index";
@@ -16,6 +16,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Contact>([]);
   displayedColumns = ['firstName','lastName','email', 'phone'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Output() editContactEvent = new EventEmitter<Contact>();
   selectedContactId: string;
 
   constructor(private contactService: ContactService) {
@@ -33,8 +34,14 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.contactListSubs.unsubscribe();
   }
 
+  /**
+   * clicked a row to edit
+   *
+   * @param {Contact} contact
+   */
   edit(contact: Contact){
     console.log('edit contact', contact);
+    this.editContactEvent.emit(contact);
   }
 
   rowClicked(contact:Contact){
