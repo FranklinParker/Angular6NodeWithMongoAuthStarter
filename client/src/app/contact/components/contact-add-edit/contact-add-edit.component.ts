@@ -40,4 +40,14 @@ export class ContactAddEditComponent implements OnInit {
     return this.contact.id === null ? "Adding New Contact": "Editing Contact";
   }
 
+  /***
+   * returns true if editing an existing record
+   *
+   *
+   * @returns {boolean}
+   */
+  isEditing(): boolean{
+    return !!this.contact.id;
+  }
+
 }

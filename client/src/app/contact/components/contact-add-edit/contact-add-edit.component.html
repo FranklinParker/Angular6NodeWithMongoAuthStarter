@@ -54,12 +54,15 @@
           Phone is required
         </mat-error>
       </mat-form-field>
-      <div>
-        <button mat-raised-button
-                [disabled]="contactForm.invalid"
-                color="accent" type="submit">Save
-        </button>
-      </div>
+      <mat-action-row>
+        <div>
+          <button mat-raised-button
+                  [disabled]="contactForm.invalid"
+                  color="accent" type="submit">Save
+          </button>
+        </div>
+      </mat-action-row>
+
     </form>
   </mat-card-content>
 </mat-card>
