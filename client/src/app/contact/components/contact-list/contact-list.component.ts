@@ -40,7 +40,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
    * @param {Contact} contact
    */
   edit(contact: Contact){
-    console.log('edit contact', contact);
     this.editContactEvent.emit(contact);
   }
 
@@ -51,7 +50,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
    */
   rowClicked(contact:Contact){
     this.selectedContactId = contact.id;
-
   }
 
 }
