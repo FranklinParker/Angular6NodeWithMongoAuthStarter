@@ -21,7 +21,7 @@ export class ContactMainComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.contactService.getContacts();
+    await this.contactService.getContacts(5, 1);
 
   }
 
