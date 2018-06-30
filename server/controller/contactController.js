@@ -1,4 +1,4 @@
-const Contact = require('../models/Conact').Contact;
+const Contact = require('../models/Contact').Contact;
 
 /**
  * save a contact
@@ -90,7 +90,6 @@ const getContacts = async (params)=>{
   }
   try {
     const contactRecords = await contactQuery;
-    console.log('contactRecords', contactRecords);
 
     return {
       success: true,

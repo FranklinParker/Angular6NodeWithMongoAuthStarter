@@ -2,7 +2,7 @@ import {Component, OnInit, Input, OnDestroy, ViewChild, EventEmitter, Output} fr
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
 import {Subscription} from "rxjs/index";
-import { MatTableDataSource, MatPaginator} from "@angular/material";
+import { MatTableDataSource, MatPaginator, PageEvent} from "@angular/material";
 
 @Component({
   selector: 'app-contact-list',
@@ -10,6 +10,11 @@ import { MatTableDataSource, MatPaginator} from "@angular/material";
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit, OnDestroy {
+  isLoading = false;
+  totalPosts = 10;
+  postsPerPage = 5;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
   contactList: Contact[] = [];
   contactListSubs: Subscription;
@@ -50,6 +55,20 @@ export class ContactListComponent implements OnInit, OnDestroy {
    */
   rowClicked(contact:Contact){
     this.selectedContactId = contact.id;
+  }
+
+  /**
+   * change page
+   *
+   *
+   * @param {PageEvent} pageData
+   */
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.contactService.getContacts(this.currentPage, this.postsPerPage);
+
   }
 
 }

@@ -24,9 +24,9 @@ export class ContactService {
    *
    * @returns {Promise<any>}
    */
-  async getContacts(): Promise<any> {
+  async getContacts(pageSize: number, currentPage: number): Promise<any> {
 
-    const queryParams = `?pageSize=${2}&currentPage=${1}`;
+    const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
     const url = this.getUrl + queryParams;
     try {
       const data: Contact[] = await this.http.get<{ success: boolean, records: any }>(url)
