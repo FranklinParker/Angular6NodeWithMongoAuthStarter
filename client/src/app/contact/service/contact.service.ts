@@ -78,12 +78,39 @@ export class ContactService {
    */
   async saveNewContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
     try {
-      const result = await this.http.post<{ success: boolean, record?: any, numberRecords?: number }>
+      const result =
+        await this.http.post<{ success: boolean, record?: any, numberRecords?: number, message?: string }>
       (this.postUrl, contact)
         .pipe(map(result => {
-          return result;
+          if(result.success){
+            return {
+              success: result.success,
+              numberRecords: result.numberRecords,
+              record: {
+                id: result.record._id,
+                firstName: result.record.firstName,
+                lastName: result.record.lastName,
+                email: result.record.email,
+                phone: result.record.phone
+              }
+
+            };
+          } else{
+            return {
+              success: result.success,
+              message: result.message
+
+            };
+          }
+
         })).toPromise();
       console.log('contact new save result', result);
+      if(result.success){
+        this.contactList.push(result.record);
+        this.contactListSubject.next(
+          { numberRecords: result.numberRecords,
+          contacts: this.contactList });
+      }
       return result;
     } catch (e) {
       console.log('error saving contact-add-edit', e);
