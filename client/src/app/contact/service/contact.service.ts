@@ -25,8 +25,11 @@ export class ContactService {
    * @returns {Promise<any>}
    */
   async getContacts(): Promise<any> {
+
+    const queryParams = `?pageSize=${2}&currentPage=${1}`;
+    const url = this.getUrl + queryParams;
     try {
-      const data: Contact[] = await this.http.get<{ success: boolean, records: any }>(this.getUrl)
+      const data: Contact[] = await this.http.get<{ success: boolean, records: any }>(url)
         .pipe(map(contactData => {
           return contactData.records.map(contact => {
             return {

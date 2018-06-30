@@ -80,9 +80,16 @@ const updateContact = async (params) => {
  */
 
 const getContacts = async (params)=>{
-	console.log('getContacts - params', params)
+	console.log('getContacts - params', params);
+	const pageSize = params.query.pageSize;
+	const currentPage = params.query.currentPage;
+  const contactQuery = Contact.find();
+  if (pageSize && currentPage) {
+    contactQuery.skip(+pageSize * (+currentPage - 1))
+      .limit(+pageSize);
+  }
   try {
-    const contactRecords = await Contact.find();
+    const contactRecords = await contactQuery;
     console.log('contactRecords', contactRecords);
 
     return {
