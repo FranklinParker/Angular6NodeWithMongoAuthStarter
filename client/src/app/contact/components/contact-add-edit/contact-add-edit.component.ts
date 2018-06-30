@@ -36,4 +36,8 @@ export class ContactAddEditComponent implements OnInit {
     }
   }
 
+  get headerMessage(){
+    return this.contact.id === null ? "Adding New Contact": "Editing Contact";
+  }
+
 }

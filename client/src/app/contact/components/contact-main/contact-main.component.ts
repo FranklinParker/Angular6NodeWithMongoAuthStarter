@@ -9,9 +9,10 @@ import {ContactService} from "../../service/contact.service";
 })
 export class ContactMainComponent implements OnInit {
   contact: Contact = {
+    id: null,
     firstName: null,
     lastName: null,
-    email: 'test',
+    email: null,
     phone: null
   };
   selectedTabIndex = 0;
@@ -33,7 +34,6 @@ export class ContactMainComponent implements OnInit {
   onEditContact(contact: Contact){
     this.contact = contact;
     this.selectedTabIndex = 1;
-
   }
 
 }
