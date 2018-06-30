@@ -25,15 +25,31 @@ export class ContactMainComponent implements OnInit {
 
   }
 
-
-  goToResultTab() {
-    this.selectedTabIndex = 1;
-
-  }
-
+  /**
+   * a contact is selected go to edit tab
+   *
+   *
+   * @param {Contact} contact
+   */
   onEditContact(contact: Contact){
     this.contact = contact;
     this.selectedTabIndex = 1;
+  }
+
+  /**
+   *
+   *
+   */
+  onSetToNewContact(){
+    this.contact = {
+      id: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+      phone: null
+
+    }
+    console.log('reset contact',  this.contact)
   }
 
 }

@@ -44,6 +44,11 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.editContactEvent.emit(contact);
   }
 
+  /**
+   * used to highlight a row
+   *
+   * @param {Contact} contact
+   */
   rowClicked(contact:Contact){
     this.selectedContactId = contact.id;
 

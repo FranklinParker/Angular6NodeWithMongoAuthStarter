@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material";
 })
 export class ContactAddEditComponent implements OnInit {
   @Input() contact: Contact;
+  @Output() setToNewContactEvent = new EventEmitter();
   constructor(private contactService: ContactService,
               private snackBar: MatSnackBar) { }
 
@@ -34,6 +35,15 @@ export class ContactAddEditComponent implements OnInit {
         duration: 9000
       });
     }
+  }
+
+  /**
+   * sets to editing a new contact
+   *
+   *
+   */
+  onSetToNewContact(){
+    this.setToNewContactEvent.emit();
   }
 
   get headerMessage(){
