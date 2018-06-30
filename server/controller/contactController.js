@@ -39,6 +39,39 @@ const saveContact = async (params) => {
 
 };
 
+
+/**
+ * update a contact
+ *
+ *
+ * @param params
+ * @returns {Promise<*>}
+ */
+const updateContact = async (params) => {
+  const contactData = params.actionData;
+
+  try {
+
+    const contact = new Contact({
+      firstName: contactData.firstName,
+      lastName: contactData.lastName,
+      email: contactData.email,
+      phone: contactData.phone,
+      _id: contactData.id
+    });
+    const contactRec =  await Contact.updateOne({_id: contactData.id}, contact);
+    return {
+      success: true,
+      record: contactRec
+    };
+  } catch (e) {
+    return {
+      success: false,
+      message: e.message
+    };
+  }
+
+};
 /**
  * get a list of contacts
  *
@@ -67,5 +100,6 @@ const getContacts = async (params)=>{
 
 module.exports ={
 	saveContact,
+  updateContact,
 	getContacts
 }
