@@ -9,6 +9,9 @@ mat-card{
   width: 90%;
   alignment: center;
   margin: 2%;
+}
 
+button{
+  margin-left: 1rem;
 }
 

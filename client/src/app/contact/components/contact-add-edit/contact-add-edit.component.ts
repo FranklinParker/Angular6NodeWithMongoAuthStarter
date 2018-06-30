@@ -46,7 +46,7 @@ export class ContactAddEditComponent implements OnInit {
    *
    * @returns {boolean}
    */
-  isEditing(): boolean{
+  get isEditing(): boolean{
     return !!this.contact.id;
   }
 
