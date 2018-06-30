@@ -12,8 +12,7 @@ export class ContactService {
   getUrl = environment.apiUrl + 'contact';
   postUrl = environment.apiUrl + 'contact';
   contactList: Contact[] = [];
-  private contactListSubject = new Subject<Contact[]> ();
-
+  private contactListSubject = new Subject<{ numberRecords: number, contacts: Contact[] }>();
 
 
   constructor(private http: HttpClient) {
@@ -24,27 +23,36 @@ export class ContactService {
    *
    * @returns {Promise<any>}
    */
-  async getContacts( currentPage: number,pageSize: number): Promise<any> {
+  async getContacts(currentPage: number, pageSize: number): Promise<any> {
 
     const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
     console.log('queryParams', queryParams);
     const url = this.getUrl + queryParams;
     try {
-      const data: Contact[] = await this.http.get<{ success: boolean, records: any }>(url)
-        .pipe(map(contactData => {
-          return contactData.records.map(contact => {
+      const data: { numberRecords: number, contacts: Contact[] } = await
+        this.http.get<{ success: boolean, records: any, numberRecords: number }>(url)
+          .pipe(map(contactData => {
             return {
-              id: contact._id,
-              firstName: contact.firstName,
-              lastName: contact.lastName,
-              email: contact.email,
-              phone: contact.phone
+              numberRecords: contactData.numberRecords,
+              contacts: contactData.records.map(record => {
+                return {
+                  id: record._id,
+                  lastName: record.lastName,
+                  firstName: record.firstName,
+                  phone: record.phone,
+                  email: record.email
+                };
+              })
 
             };
-          });
-        })).toPromise();
-      this.contactList = data;
-      this.contactListSubject.next(this.contactList);
+          })).toPromise();
+      console.log('data ', data);
+      this.contactList = data.contacts;
+      this.contactListSubject.next(
+        {
+          numberRecords: data.numberRecords,
+          contacts: this.contactList
+        });
     } catch (e) {
       console.log('error getting contacts', e);
     }
@@ -57,7 +65,7 @@ export class ContactService {
    *
    * @returns {Observable<Contact[]>}
    */
-  getContactListObservable(){
+  getContactListObservable() {
     return this.contactListSubject.asObservable();
   }
 

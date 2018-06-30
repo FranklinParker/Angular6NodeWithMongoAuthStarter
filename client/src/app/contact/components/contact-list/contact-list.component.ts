@@ -29,9 +29,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.contactListSubs = this.contactService.getContactListObservable()
-      .subscribe((contactList: Contact[]) => {
-        this.contactList = contactList;
+      .subscribe((result:{contacts: Contact[], numberRecords: number}) => {
+        this.contactList = result.contacts;
         this.dataSource.data = this.contactList;
+        this.totalPosts = result.numberRecords;
       });
   }
 
