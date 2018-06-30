@@ -78,9 +78,8 @@ export class ContactService {
    */
   async saveNewContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
     try {
-      const result = await this.http.post<any>(this.postUrl,
-        contact
-      )
+      const result = await this.http.post<{ success: boolean, record?: any, numberRecords?: number }>
+      (this.postUrl, contact)
         .pipe(map(result => {
           return result;
         })).toPromise();

@@ -26,9 +26,11 @@ const saveContact = async (params) => {
 			phone: contactData.phone
 		});
 		const contactRec = await contact.save();
+		const numberRecords = await Contact.count();
 		return {
 			success: true,
-			record: contactRec
+			record: contactRec,
+      numberRecords: numberRecords
 		};
 	} catch (e) {
 		return {
