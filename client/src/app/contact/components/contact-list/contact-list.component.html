@@ -37,6 +37,7 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 [ngClass]="{'highlight': selectedContactId === row.id}"
                  (click)="rowClicked(row)"></mat-row>
       </mat-table>
 

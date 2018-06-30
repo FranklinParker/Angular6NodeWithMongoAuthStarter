@@ -16,6 +16,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Contact>([]);
   displayedColumns = ['firstName','lastName','email', 'phone'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  selectedContactId: string;
 
   constructor(private contactService: ContactService) {
   }
@@ -37,7 +38,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   rowClicked(contact:Contact){
-    console.log('row clicked contact', contact);
+    this.selectedContactId = contact.id;
 
   }
 

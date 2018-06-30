@@ -3,5 +3,16 @@ mat-card{
   width: 90%;
   alignment: center;
   margin: 2%;
+}
 
+mat-header-row{
+  background-color: black;
+}
+
+mat-header-cell{
+  color: white;
+  font-size: 14pt;
+}
+.highlight{
+  background: #95f455;  /* #eff1f4; */
 }
