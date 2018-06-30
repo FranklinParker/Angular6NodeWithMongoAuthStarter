@@ -24,7 +24,7 @@ export class ContactService {
    *
    * @returns {Promise<any>}
    */
-  async getContacts(pageSize: number, currentPage: number): Promise<any> {
+  async getContacts( currentPage: number,pageSize: number): Promise<any> {
 
     const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
     console.log('queryParams', queryParams);
