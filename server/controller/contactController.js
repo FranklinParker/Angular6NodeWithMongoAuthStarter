@@ -84,6 +84,7 @@ const getContacts = async (params)=>{
 	const pageSize = params.query.pageSize;
 	const currentPage = params.query.currentPage;
   const contactQuery = Contact.find();
+  const count = await Contact.count();
   if (pageSize && currentPage) {
     contactQuery.skip(+pageSize * (+currentPage - 1))
       .limit(+pageSize);
@@ -93,7 +94,8 @@ const getContacts = async (params)=>{
 
     return {
       success: true,
-      records: contactRecords
+      records: contactRecords,
+      numberRecords: count
     };
   } catch (e) {
     return {
