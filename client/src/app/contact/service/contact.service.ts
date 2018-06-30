@@ -19,7 +19,7 @@ export class ContactService {
   }
 
   /**
-   * get contact records
+   * get contact records and number of records
    *
    * @returns {Promise<any>}
    */
@@ -46,7 +46,6 @@ export class ContactService {
 
             };
           })).toPromise();
-      console.log('data ', data);
       this.contactList = data.contacts;
       this.contactListSubject.next(
         {
@@ -68,37 +67,6 @@ export class ContactService {
   getContactListObservable() {
     return this.contactListSubject.asObservable();
   }
-
-  /**
-   *
-   *
-   * @param {number} currentPage
-   * @param pageSize
-   */
-  // getPosts(currentPage: number, pageSize) {
-  //   const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
-  //   this.http
-  //     .get<{ message: string; posts: any, maxPosts: number }>(BACKEND_URL + queryParams)
-  //     .pipe(
-  //       map(postData => {
-  //         return {
-  //           posts: postData.posts.map(post => {
-  //             return {
-  //               title: post.title,
-  //               content: post.content,
-  //               id: post._id,
-  //               imagePath: post.imagePath,
-  //               creator: post.creator
-  //             };
-  //           }),
-  //           maxPosts: postData.maxPosts
-  //         };
-  //       })
-  //     ).subscribe(transformedPosts => {
-  //     this.posts = transformedPosts.posts;
-  //     this.postsUpdated.next({posts: [...this.posts], postCount: transformedPosts.maxPosts});
-  //   });
-  // }
 
 
   /**
