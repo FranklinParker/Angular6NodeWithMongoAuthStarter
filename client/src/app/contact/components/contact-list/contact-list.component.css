@@ -5,11 +5,19 @@ mat-card{
   margin: 2%;
 }
 
-mat-header-row{
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-header-row{
   background-color: black;
 }
 
-mat-header-cell{
+.mat-header-cell{
   color: white;
   font-size: 14pt;
 }
