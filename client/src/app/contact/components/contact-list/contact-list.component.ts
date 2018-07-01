@@ -11,8 +11,8 @@ import { MatTableDataSource, MatPaginator, PageEvent} from "@angular/material";
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   isLoading = false;
-  totalPosts = 10;
-  postsPerPage = 5;
+  totalContacts = 10;
+  contactsPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
 
@@ -32,7 +32,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
       .subscribe((result:{contacts: Contact[], numberRecords: number}) => {
         this.contactList = result.contacts;
         this.dataSource.data = this.contactList;
-        this.totalPosts = result.numberRecords;
+        this.totalContacts = result.numberRecords;
       });
   }
 
@@ -49,6 +49,15 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.editContactEvent.emit(contact);
   }
 
+  /***
+   * filter the contact list
+   *
+   * @param {string} filter
+   */
+  applyFilter(filter: string){
+    this.dataSource.filter = filter;
+    console.log('dataSource Length', this.dataSource.data.length);
+  }
   /**
    * used to highlight a row
    *
@@ -68,9 +77,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
     console.log('page data', pageData);
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
-    this.postsPerPage = pageData.pageSize;
-    console.log('this.postsPerPage:'+ this.postsPerPage);
-    this.contactService.getContacts(this.currentPage, this.postsPerPage);
+    this.contactsPerPage = pageData.pageSize;
+    console.log('this.contactsPerPage:'+ this.contactsPerPage);
+    this.contactService.getContacts(this.currentPage, this.contactsPerPage);
 
   }
 

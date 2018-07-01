@@ -3,22 +3,27 @@
     fxLayout="column"
     fxLayoutAlign="center left"
     fxLayoutGap="10px">
-    <h1 >Contacts</h1>
+    <h1>Contacts</h1>
   </mat-card-header>
   <mat-card-content>
+
     <div *ngIf="contactList && contactList.length>0">
+      <mat-form-field class="p-1 filter-control">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Contacts">
+      </mat-form-field>
       <mat-table #table [dataSource]="dataSource">
 
         <ng-container matColumnDef="firstName">
           <mat-header-cell *matHeaderCellDef style="text-align:left;padding-left: 20px">First Name</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:left" >
+          <mat-cell *matCellDef="let element" style="text-align:left">
             <button mat-button (click)="edit(element)" color="primary">
-              {{element.firstName}}</button>
+              {{element.firstName}}
+            </button>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="lastName">
           <mat-header-cell *matHeaderCellDef style="text-align:left;">Last Name</mat-header-cell>
-          <mat-cell *matCellDef="let element" style="text-align:left" >
+          <mat-cell *matCellDef="let element" style="text-align:left">
             {{element.lastName}}
           </mat-cell>
         </ng-container>
@@ -27,12 +32,14 @@
         <ng-container matColumnDef="email">
           <mat-header-cell *matHeaderCellDef style="text-align:left">Email</mat-header-cell>
           <mat-cell *matCellDef="let element" style="text-align:left">
-            {{element.email}}</mat-cell>
+            {{element.email}}
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="phone">
           <mat-header-cell *matHeaderCellDef style="text-align:center">Phone</mat-header-cell>
-            <mat-cell *matCellDef="let element" style="text-align:left">
-              {{element.phone}}</mat-cell>
+          <mat-cell *matCellDef="let element" style="text-align:left">
+            {{element.phone}}
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -40,8 +47,8 @@
                  [ngClass]="{'highlight': selectedContactId === row.id}"
                  (click)="rowClicked(row)"></mat-row>
       </mat-table>
-      <mat-paginator [length]="totalPosts"
-                     [pageSize]="postsPerPage"
+      <mat-paginator [length]="totalContacts"
+                     [pageSize]="contactsPerPage"
                      [pageSizeOptions]="pageSizeOptions"
                      (page)="onChangedPage($event)"
                      *ngIf="contactList.length>0">
