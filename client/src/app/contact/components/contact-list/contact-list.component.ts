@@ -2,7 +2,7 @@ import {Component, OnInit, Input, OnDestroy, ViewChild, EventEmitter, Output} fr
 import {Contact} from "../../model/contact";
 import {ContactService} from "../../service/contact.service";
 import {Subscription} from "rxjs/index";
-import { MatTableDataSource, MatPaginator, PageEvent} from "@angular/material";
+import {MatTableDataSource, MatPaginator, PageEvent, MatSort} from "@angular/material";
 
 @Component({
   selector: 'app-contact-list',
@@ -24,6 +24,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Contact>([]);
   displayedColumns = ['firstName','lastName','email', 'phone'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   @Output() editContactEvent = new EventEmitter<Contact>();
   selectedContactId: string;
 
@@ -34,14 +36,24 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.contactListSubs = this.contactService.getContactListObservable()
       .subscribe((result:{contacts: Contact[], numberRecords: number}) => {
         this.contactList = result.contacts;
-        this.filteredContactList = this.contactList;
-        this.dataSource.data = this.filteredContactList;
+        this.dataSource.data = this.contactList;
         this.totalContacts = result.numberRecords;
       });
+
+
   }
 
   ngOnDestroy() {
     this.contactListSubs.unsubscribe();
+  }
+
+  sortField(field:string){
+    console.log('this.sort', this.sort);
+    console.log('this.sort.active', this.sort.active);
+    console.log('this.sort.active', this.sort.direction);
+
+    this.dataSource.sort = this.sort;
+
   }
 
   /**
