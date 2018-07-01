@@ -8,9 +8,18 @@
   <mat-card-content>
 
     <div *ngIf="contactList && contactList.length>0">
-      <mat-form-field class="p-1 filter-control">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Contacts">
+      <mat-form-field >
+        <input matInput [(ngModel)]="filterLastName"
+               (keyup)="applyLastNameFilter($event.target.value)"
+               placeholder="Filter Contacts Last Name">
       </mat-form-field>
+      <mat-form-field >
+        <input matInput [(ngModel)]="filterAll"
+               (keyup)="applyAnyFilter($event.target.value)"
+               placeholder="Filter Contacts">
+      </mat-form-field>
+
+
       <mat-table #table [dataSource]="dataSource">
 
         <ng-container matColumnDef="firstName">

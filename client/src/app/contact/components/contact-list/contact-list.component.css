@@ -16,3 +16,7 @@ mat-header-cell{
 .highlight{
   background: #95f455;  /* #eff1f4; */
 }
+
+mat-form-field{
+  margin-left: 1rem;
+}

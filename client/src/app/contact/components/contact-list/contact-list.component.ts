@@ -10,6 +10,8 @@ import { MatTableDataSource, MatPaginator, PageEvent} from "@angular/material";
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit, OnDestroy {
+  filterAll:String;
+  filterLastName: string;
   isLoading = false;
   totalContacts = 10;
   contactsPerPage = 5;
@@ -17,6 +19,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 5, 10];
 
   contactList: Contact[] = [];
+  filteredContactList: Contact[] = [];
   contactListSubs: Subscription;
   dataSource = new MatTableDataSource<Contact>([]);
   displayedColumns = ['firstName','lastName','email', 'phone'];
@@ -31,7 +34,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.contactListSubs = this.contactService.getContactListObservable()
       .subscribe((result:{contacts: Contact[], numberRecords: number}) => {
         this.contactList = result.contacts;
-        this.dataSource.data = this.contactList;
+        this.filteredContactList = this.contactList;
+        this.dataSource.data = this.filteredContactList;
         this.totalContacts = result.numberRecords;
       });
   }
@@ -54,9 +58,27 @@ export class ContactListComponent implements OnInit, OnDestroy {
    *
    * @param {string} filter
    */
-  applyFilter(filter: string){
+  applyLastNameFilter(filter: string){
+    this.filterAll = null;
+    if(!filter || filter.length===0){
+      this.dataSource.data = this.contactList;
+      return;
+    }
+    this.filteredContactList = this.contactList.filter((contact)=> contact.lastName.startsWith(filter));
+    this.dataSource.data = this.filteredContactList;
+
+  }
+
+  /***
+   * filter the contact list
+   *
+   * @param {string} filter
+   */
+  applyAnyFilter(filter: string){
+    this.filterLastName = null;
+    this.dataSource.data = this.contactList
     this.dataSource.filter = filter;
-    console.log('dataSource Length', this.dataSource.data.length);
+
   }
   /**
    * used to highlight a row
@@ -74,7 +96,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
    * @param {PageEvent} pageData
    */
   onChangedPage(pageData: PageEvent) {
-    console.log('page data', pageData);
+    this.filterAll = null;
+    this.filterLastName = null;
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.contactsPerPage = pageData.pageSize;
