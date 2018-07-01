@@ -101,7 +101,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.contactsPerPage = pageData.pageSize;
-    console.log('this.contactsPerPage:'+ this.contactsPerPage);
     this.contactService.getContacts(this.currentPage, this.contactsPerPage);
 
   }
