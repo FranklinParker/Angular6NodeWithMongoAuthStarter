@@ -12,6 +12,8 @@ import {MatSnackBar} from "@angular/material";
 export class ContactAddEditComponent implements OnInit {
   @Input() contact: Contact;
   @Output() setToNewContactEvent = new EventEmitter();
+  mask: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
 
   constructor(private contactService: ContactService,
               private snackBar: MatSnackBar) {

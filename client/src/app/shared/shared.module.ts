@@ -4,6 +4,7 @@ import {MaterialModule} from "../material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import {TextMaskModule} from "angular2-text-mask";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {FormsModule} from "@angular/forms";
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TextMaskModule
   ],
   declarations: []
 })

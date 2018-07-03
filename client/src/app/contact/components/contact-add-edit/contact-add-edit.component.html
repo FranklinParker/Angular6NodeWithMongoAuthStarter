@@ -46,6 +46,7 @@
         <input matInput
                name="phone"
                type="text"
+               [textMask]="{mask: mask}"
                #phoneInput="ngModel"
                [(ngModel)]="contact.phone"
                required
